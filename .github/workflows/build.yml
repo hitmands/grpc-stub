@@ -1,0 +1,40 @@
+name: "CI/CD"
+
+on:
+  push:
+    tags:
+      - "**"
+
+jobs:
+  build:
+    name: "Building & Publishing"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+
+      - name: Extracting Build Values
+        id: build
+        run: |
+          NAME=$(cat package.json | jq '.name' | sed -r 's/[@"]+//g')
+          VERSION=$(cat package.json | jq '.version' | sed -r 's/[@"]+//g')
+          PACKAGE="${NAME}@${VERSION}"
+
+          echo "::set-output name=NAME::$NAME"
+          echo "::set-output name=VERSION::$VERSION"
+          echo "::set-output name=PACKAGE::$PACKAGE"
+
+      - name: "Building ${{ steps.build.outputs.PACKAGE }}"
+        run: |
+          docker build \
+          -t ${{ steps.build.outputs.NAME }}:latest \
+          -t ${{ steps.build.outputs.NAME }}:${{ steps.build.outputs.VERSION }} \
+          .
+
+          docker image ls
+
+      - name: "Publishing ${{ steps.build.outputs.PACKAGE }}"
+        run: |
+          docker login --username=hitmands --password=${{ secrets.DOCKER_HUB_PAT }}
+
+          docker push ${{ steps.build.outputs.NAME }} --all-tags

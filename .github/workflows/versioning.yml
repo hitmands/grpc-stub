@@ -1,0 +1,29 @@
+name: "Versioning"
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [closed]
+
+jobs:
+  versioning:
+    name: "SemVer"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-node@v2
+
+      - name: Executing Semantic Versioning
+        run: |
+          git remote set-url origin https://${{ secrets.HITMANDS_PAT }}@github.com/hitmands/grpc-stub.git
+          git config user.email gius.mand.developer@gmail.com
+          git config user.name hitmands
+
+          npx standard-version
+
+          git push origin main && git push --tags

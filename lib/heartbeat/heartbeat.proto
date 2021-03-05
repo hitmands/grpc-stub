@@ -1,0 +1,26 @@
+syntax="proto3";
+
+package grpc_stub;
+
+service Heartbeat {
+  rpc Liveness (LivenessRequest) returns (LivenessResponse) {}
+  rpc Sum (SumRequest) returns (SumResponse) {}
+}
+
+message LivenessRequest {}
+
+message LivenessResponse {
+  string name = 1;
+  string version = 2;
+  string date = 3;
+  string status = 4;
+}
+
+message SumRequest {
+  int32 left = 1;
+  int32 right = 2;
+}
+
+message SumResponse {
+  int32 result = 1;
+}

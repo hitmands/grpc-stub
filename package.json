@@ -1,0 +1,18 @@
+{
+  "name": "@hitmands/grpc-stub",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "repository": "https://github.com/hitmands/grpc-stub.git",
+  "author": "Giuseppe Mandato <gius.mand.developer@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.mjs"
+  },
+  "dependencies": {
+    "@grpc/proto-loader": "^0.3.0",
+    "grpc": "^1.24.5",
+    "grpc-kit": "^0.2.0",
+    "ramda": "^0.27.1"
+  }
+}
