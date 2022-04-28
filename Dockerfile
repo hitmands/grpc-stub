@@ -3,6 +3,8 @@ MAINTAINER Giuseppe Mandato <gius.mand.developer@gmail.com>
 
 WORKDIR grpc-stub
 
+RUN npm i -g nodemon
+
 COPY yarn.lock yarn.lock
 COPY package.json package.json
 RUN yarn install --frozen-lockfile --prefer-offline --silent
