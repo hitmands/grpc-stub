@@ -20,7 +20,7 @@ jobs:
 
       - name: Executing Semantic Versioning
         run: |
-          git remote set-url origin https://${{ secrets.HITMANDS_PAT }}@github.com/hitmands/grpc-stub.git
+          git remote set-url origin https://hitmands:${{ secrets.GITHUB_TOKEN }}@github.com/hitmands/grpc-stub.git
           git config user.email gius.mand.developer@gmail.com
           git config user.name hitmands
 
